@@ -2,12 +2,8 @@
 // https://stackoverflow.com/a/63602976/470749
 const express = require('express');
 const proxy_router = express.Router();
-// const app = express();
 const https = require('https');
 const http = require('http');
-// const { response } = require('express');
-
-// const targetUrl = process.env.TARGET_URL || 'https://jsonplaceholder.typicode.com'; // Run localtunnel like `lt -s rscraper -p 8080 --print-requests`; then visit https://yourname.loca.lt/todos/1 .
 
 const proxyServerPort = process.env.PROXY_SERVER_PORT || 8080;
 
@@ -40,7 +36,6 @@ proxy_router.use('/', async (clientRequest, clientResponse) => {
         else{
             clientResponse.send("I don't know how to process the type: "+type)
         }
-        // clientResponse.send(foo_res.blob());
 
     })
     .catch((err)=>{console.log(err)});
@@ -73,11 +68,7 @@ proxy_router.use('/', async (clientRequest, clientResponse) => {
       });
 
       serverResponse.on('end', function () {
-        // Make changes to HTML files when they're done being read.
-        // body = body.replace(`example`, `Cat!`);
-
         clientResponse.writeHead(serverResponse.statusCode, serverResponse.headers);
-        // clientResponse.WriteHeader(parsedSSL.StatusOK)
         clientResponse.end(body);
       });
     } else {
@@ -90,11 +81,6 @@ proxy_router.use('/', async (clientRequest, clientResponse) => {
 
   serverRequest.end();
 });
-
-// /console.log(`Proxy server listening on port ${proxyServerPort}`);
-function base64encode(str) {
-    return btoa(unescape(encodeURIComponent(str)));
-  }
 
 module.exports = proxy_router;
 
